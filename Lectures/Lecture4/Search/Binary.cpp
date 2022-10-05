@@ -24,18 +24,18 @@ void Menu(vector<int> &values, int &n, int &c)
     cin >> c;
 }
 
-bool BinarySearch(vector<int> values, int n, int c, int low, int hight)
+string BinarySearch(vector<int> values, int n, int c, int low, int hight)
 {
     if (values.empty() || low > hight)
     {
         cout << "Not found!\n";
-        return 0;
+        return "No";
     }
     int mid = (low + hight) / 2;
     if (c == values[mid])
     {
         cout <<"This value located in " << mid + 1<<" order\n";
-        return 0;
+        return "Yes";
     }
     else
     {
