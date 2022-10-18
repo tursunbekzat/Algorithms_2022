@@ -3,7 +3,6 @@
 using namespace std;
 
 vector<int> v;
-int lev = 0;
 
 struct Tree
 {
@@ -77,14 +76,45 @@ void Postorder(Tree *root)
     cout << root->val << " ";
 }
 
-Tree* SumLevel(Tree *root)
+int getHeight(Tree *root)
 {
-    int sum = 0;
     if (root == NULL)
+        return 0;
+    else
+    {
+        return 1 + max(
+                       getHeight(root->left),
+                       getHeight(root->right));
+    }
+}
+
+Tree *SumLevel(Tree *root)
+{
+    if (root == NULL)
+        return NULL;
+    root->left = SumLevel(root->left);
+    root->right = SumLevel(root->right);
+    if (root->left == NULL && root->right == NULL)
         return root;
-    SumLevel(root->left);
-    SumLevel(root->right);
-    v.push_back(sum);
+    if (root->left != NULL)
+    {
+        if (root->right != NULL)
+        {
+            v.push_back(root->left->val + root->right->val);
+        }
+        else
+        {
+            v.push_back(root->left->val);
+        }
+    }
+    else if (root->right != NULL)
+    {
+        v.push_back(root->right->val);
+    }
+    else
+    {
+        v.push_back(root->val);
+    }
     return root;
 }
 
@@ -99,11 +129,11 @@ int main()
         cin >> x;
         root = Insert(root, x);
     }
+    int size = getHeight(root);
+    cout << size << endl;
     SumLevel(root);
-
     v.push_back(root->val);
-    cout << lev + 1<< endl;
-    for (int i(lev); i > -1; i--)
+    for (int i(size); i > -1; i--)
     {
         cout << v[i] << " ";
     }

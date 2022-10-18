@@ -1,12 +1,14 @@
 #include <iostream>
 using namespace std;
 
-struct Node {
+struct Node
+{
     int value;
     int cnt;
     Node *left, *right;
 
-    Node(int value) {
+    Node(int value)
+    {
         this->value = value;
         cnt = 1;
         left = NULL;
@@ -14,41 +16,66 @@ struct Node {
     }
 };
 
-Node* getMin(Node *root) {
-    while (root->left) {
+Node *getMin(Node *root)
+{
+    while (root->left)
+    {
         root = root->left;
     }
     return root;
 }
 
-Node* insert(int value, Node *root) {
-    if (root == NULL) {
+Node *insert(int value, Node *root)
+{
+    if (root == NULL)
+    {
         root = new Node(value);
-    } else if (root->value > value) {
+    }
+    else if (root->value > value)
+    {
         root->left = insert(value, root->left);
-    } else if (root->value < value) {
+    }
+    else if (root->value < value)
+    {
         root->right = insert(value, root->right);
-    } else {
+    }
+    else
+    {
         root->cnt++;
     }
     return root;
 }
 
-Node* remove(int value, Node *root) {
-    if (root == NULL) {
+Node *remove(int value, Node *root)
+{
+    if (root == NULL)
+    {
         return NULL;
-    } else if (root->value > value) {
+    }
+    else if (root->value > value)
+    {
         root->left = remove(value, root->left);
-    } else if (root->value < value) {
+    }
+    else if (root->value < value)
+    {
         root->right = remove(value, root->right);
-    } else {
-        if (root->cnt > 1) {
+    }
+    else
+    {
+        if (root->cnt > 1)
+        {
             root->cnt--;
-        } else if (!(root->left)) {
+        }
+        else if (!(root->left))
+        {
             return root->right;
-        } else if (!(root->right)) {
+        }
+        else if (!(root->right))
+        {
             return root->left;
-        } else {
+        }
+        else
+        {
             Node *mn = getMin(root->right);
             root->value = mn->value;
             root->cnt = mn->cnt;
@@ -58,63 +85,87 @@ Node* remove(int value, Node *root) {
     return root;
 }
 
-int count(int value, Node *root) {
-    if (root == NULL) {
+int count(int value, Node *root)
+{
+    if (root == NULL)
+    {
         return 0;
-    } else if (root->value == value) {
+    }
+    else if (root->value == value)
+    {
         return root->cnt;
-    } else if (root->value > value) {
+    }
+    else if (root->value > value)
+    {
         return count(value, root->left);
-    } else {
+    }
+    else
+    {
         return count(value, root->right);
     }
 }
 
-int getHeight(Node *root) {
-    if (root == NULL) return 0;
-    else {
+int getHeight(Node *root)
+{
+    if (root == NULL)
+        return 0;
+    else
+    {
         return 1 + max(
-            getHeight(root->left),
-            getHeight(root->right)
-        );
+                       getHeight(root->left),
+                       getHeight(root->right));
     }
 }
 
-int getSize(Node *root) {
-    if (root == NULL) return 0;
-    else return 1 + getSize(root->left) + getSize(root->right);
+int getSize(Node *root)
+{
+    if (root == NULL)
+        return 0;
+    else
+        return 1 + getSize(root->left) + getSize(root->right);
 }
 
-void preorder(Node *root) {
-    if (root == NULL) return;
+void preorder(Node *root)
+{
+    if (root == NULL)
+        return;
     cout << root->value << " ";
     preorder(root->left);
     preorder(root->right);
 }
 
-void inorder(Node *root) {
-    if (root == NULL) return;
+void inorder(Node *root)
+{
+    if (root == NULL)
+        return;
     inorder(root->left);
     cout << root->value << " ";
     inorder(root->right);
 }
 
-void postorder(Node *root) {
-    if (root == NULL) return;
+void postorder(Node *root)
+{
+    if (root == NULL)
+        return;
     postorder(root->left);
     postorder(root->right);
     cout << root->value << " ";
 }
 
-int main() {
+int main()
+{
     Node *root = NULL;
-    int n; cin >> n;
-    for (int i = 0; i < n; i++) {
-        int a; cin >> a;
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        int a;
+        cin >> a;
         root = insert(a, root);
     }
     inorder(root);
     cout << endl;
+    cout << getHeight(root) << endl;
 
     // int m; cin >> m;
     // for (int i = 0; i < m; i++) {
@@ -139,4 +190,5 @@ int main() {
     //         cout << count(x, root) << endl;
     //     }
     // }
+    return 0;
 }
