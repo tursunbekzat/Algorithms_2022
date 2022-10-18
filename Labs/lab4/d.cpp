@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-vector<int> v;
+vector<int> v, v1, v2;
 
 struct Tree
 {
@@ -12,13 +12,12 @@ struct Tree
     Tree(int val)
     {
         this->val = val;
-        left = NULL;
-        right = NULL;
         cnt = 1;
+        left = right = NULL;
     }
 };
 
-Tree *Insert(Tree *root, int val)
+Tree *Init(Tree *root, int val)
 {
     if (root == NULL)
     {
@@ -27,11 +26,11 @@ Tree *Insert(Tree *root, int val)
     }
     if (root->val > val)
     {
-        root->left = Insert(root->left, val);
+        root->left = Init(root->left, val);
     }
     else if (root->val < val)
     {
-        root->right = Insert(root->right, val);
+        root->right = Init(root->right, val);
     }
     else
     {
@@ -40,103 +39,126 @@ Tree *Insert(Tree *root, int val)
     return root;
 }
 
-void Print(Tree *root)
+// void Print(Tree *root)
+// {
+//     while (root != NULL)
+//     {
+//         if (root->left)
+//         {
+//             if (root->right)
+//             {
+//                 cout << root->left->val << " <- " << root->val << " -> " << root->right->val;
+//             }
+//             else
+//             {
+//                 cout << root->left->val << " <- " << root->val << " -> NULL";
+//             }
+//         }
+//         else if (root->right)
+//         {
+//             cout << "NULL <- " << root->val << " -> " << root->right->val;
+//         }
+//         else
+//         {
+//             cout << "NULL <- " << root->val << " -> NULL";
+//         }
+//         cout << endl;
+//         root = root->left;
+//     }
+// }
+
+// Utility function to print
+// the contents of an array
+void printArr(int arr[], int n)
 {
-    if (root == NULL)
-        return;
-    cout << root->val << " ";
-    Print(root->left);
-    Print(root->right);
+	for (int i = 0; i < n; i++)
+		cout << arr[i] << " ";
 }
 
-void Preorder(Tree *root)
+// Function to return the height
+// of the binary tree
+int getHeight(Tree* root)
 {
-    if (root == NULL)
-        return;
-    cout << root->val << " ";
-    Preorder(root->right);
-    Preorder(root->left);
-}
-
-void Inorder(Tree *root)
-{
-    if (root == NULL)
-        return;
-    Inorder(root->left);
-    cout << root->val << " ";
-    Inorder(root->right);
-}
-
-void Postorder(Tree *root)
-{
-    if (root == NULL)
-        return;
-    Postorder(root->left);
-    Postorder(root->right);
-    cout << root->val << " ";
-}
-
-int getHeight(Tree *root)
-{
-    if (root == NULL)
-        return 0;
-    else
-    {
-        return 1 + max(
-                       getHeight(root->left),
-                       getHeight(root->right));
-    }
-}
-
-Tree *SumLevel(Tree *root)
-{
-    if (root == NULL)
-        return NULL;
-    root->left = SumLevel(root->left);
-    root->right = SumLevel(root->right);
     if (root->left == NULL && root->right == NULL)
-        return root;
+        return 0;
+ 
+    int left = 0;
     if (root->left != NULL)
-    {
-        if (root->right != NULL)
-        {
-            v.push_back(root->left->val + root->right->val);
-        }
-        else
-        {
-            v.push_back(root->left->val);
-        }
-    }
-    else if (root->right != NULL)
-    {
-        v.push_back(root->right->val);
-    }
-    else
-    {
-        v.push_back(root->val);
-    }
-    return root;
+        left = getHeight(root->left);
+ 
+    int right = 0;
+    if (root->right != NULL)
+        right = getHeight(root->right);
+ 
+    return (max(left, right) + 1);
 }
+ 
+// Recursive function to update sum[] array
+// such that sum[i] stores the sum
+// of all the elements at ith level
+void calculateLevelSum(Tree* Tree, int level, int sum[])
+{
+    if (Tree == NULL)
+        return;
+ 
+    // Add current Tree data to the sum
+    // of the current Tree's level
+    sum[level] += Tree->val;
+ 
+    // Recursive call for left and right sub-tree
+    calculateLevelSum(Tree->left, level + 1, sum);
+    calculateLevelSum(Tree->right, level + 1, sum);
+}
+
+// int Sum(Tree *root)
+// {
+//     int sum = 0;
+//     if (root->left)
+//     {
+//         if (root->right)
+//         {
+//             cout << root->left->val << " <- " << root->val << " -> " << root->right->val;
+//             sum = root->left->val + root->right->val;
+//         }
+//         else
+//         {
+//             cout << root->left->val << " <- " << root->val << " -> NULL";
+//             sum = root->left->val;
+//         }
+//     }
+//     else if (root->right)
+//     {
+//         cout << "NULL <- " << root->val << " -> " << root->right->val;
+//         sum = root->right->val;
+//     }
+//     // else
+//     // {
+//     //     cout << "NULL <- " << root->val << " -> NULL";
+//     //     sum = root->val;
+//     // }
+//     return sum;
+// }
 
 int main()
 {
+    Tree *root = NULL;
     int n;
     cin >> n;
-    Tree *root = NULL;
     int x;
     for (int i(0); i < n; i++)
     {
         cin >> x;
-        root = Insert(root, x);
+        root = Init(root, x);
     }
-    int size = getHeight(root);
-    cout << size << endl;
-    SumLevel(root);
-    v.push_back(root->val);
-    for (int i(size); i > -1; i--)
-    {
-        cout << v[i] << " ";
-    }
-    cout << endl;
+    // Count of levels in the
+    // given binary tree
+    int levels = getHeight(root) + 1;
+    // To store the sum at every level
+    int sum[levels] = { 0 };
+    cout << levels << endl;
+    calculateLevelSum(root, 0, sum);
+    // Print the required sums
+    printArr(sum, levels);
+
     return 0;
 }
