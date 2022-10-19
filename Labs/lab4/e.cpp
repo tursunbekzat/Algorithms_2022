@@ -1,6 +1,7 @@
 #include <iostream>
-#include <vector>
+#include <algorithm>
 using namespace std;
+
 struct Tree
 {
     int val;
@@ -40,88 +41,68 @@ Tree *Insert(Tree *root, int x, int y, int z)
 void Print(Tree *root)
 {
     if (root == NULL)
-    {
         return;
-    }
     cout << root->val << " ";
     Print(root->left);
     Print(root->right);
 }
 
-int Sum(Tree *root)
+int getHeight(Tree *root)
 {
     if (root == NULL)
-    {
-        cout << "NULL";
-        return 1;
-    }
-    int sum = 0;
-    if (root->left)
-    {
-        if (root->right)
-        {
-            cout << root->left->val << " <- " << root->val << " -> " << root->right->val;
-            sum = root->left->val + root->right->val;
-        }
-        else
-        {
-            cout << root->left->val << " <- " << root->val << " -> NULL";
-            sum = root->left->val;
-        }
-    }
-    else if (root->right)
-    {
-        cout << "NULL <- " << root->val << " -> " << root->right->val;
-        sum = root->right->val;
-    }
-    else
-    {
-        cout << "NULL <- " << root->val << " -> NULL";
-        sum = root->val;
-    }
-    return sum;
+        return 0;
+    return 1 + max(getHeight(root->left), getHeight(root->right));
 }
 
-int getMax(Tree *root)
+int getSizeOfValLastLevel(Tree *root, int lev)
 {
-    if(root == NULL){
+    int cnt = 0;
+    if (root == NULL)
         return 0;
-    }
-    int max = root->val;
-    if (root->left == NULL && root->right == NULL)
+    if (lev == 1)
     {
-        return 0;
+        cnt++;
     }
-    if (max < getMax(root->left))
-        max = getMax(root->left);
-    if (max < getMax(root->right))
-        max = getMax(root->right);
-    return max;
+    return cnt + getSizeOfValLastLevel(root->left, lev - 1) + getSizeOfValLastLevel(root->right, lev - 1);
+}
+
+void calculateLevelSum(Tree *Tree, int level, int sum[], int height)
+{
+    if (Tree == NULL)
+        return;
+    // Add current Tree data to the sum
+    // of the current Tree's level
+    sum[level] += 1;
+
+    // Recursive call for left and right sub-tree
+    calculateLevelSum(Tree->left, level + 1, sum, height);
+    calculateLevelSum(Tree->right, level + 1, sum, height);
 }
 
 int main()
 {
-    Tree *root = NULL;
-    root = new Tree(1);
-    int n;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n, x, y, z;
     cin >> n;
-    for (int i(0); i < n - 1; i++)
+    Tree *root = new Tree(1);
+    for (int i(1); i < n; i++)
     {
-        int x, y, z;
         cin >> x >> y >> z;
         root = Insert(root, x, y, z);
     }
-    // Print(root);
-    // cout << endl;
-
-    cout << getMax(root)
-         << endl;
-    // cout << endl;
-    // Sum(root);
-    // cout << endl;
-    // Sum(root->left);
-    // cout << endl;
-    // Sum(root->right);
-    // cout << endl;
+    int height = getHeight(root);
+    int sum[height] = {0};
+    calculateLevelSum(root, 0, sum, height);
+    int maximum = 0;
+    for (int i(0); i < height; i++)
+    {
+        if (maximum < sum[i])
+        {
+            maximum = sum[i];
+        }
+    }
+    cout << maximum << endl;
     return 0;
 }
