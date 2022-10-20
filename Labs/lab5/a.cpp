@@ -1,100 +1,120 @@
 #include <iostream>
-#include <algorithm>
-#include <math.h>
-#include <vector>
-#include <bits/stdc++.h>
-
 using namespace std;
 
-struct Tree
-{
-    int val;
-    Tree *left, *right;
-    Tree(int val)
-    {
-        this->val = val;
-        left = right = NULL;
-    }
-};
+unsigned long long heap[200010];
+int sz = 0;
 
-Tree *Insert(Tree *root, int val)
+void heapify(int i)
 {
-    if (root == NULL)
+    int left = i + i + 1;
+    int right = i + i + 2;
+
+    int mx = i;
+
+    if (left < sz && heap[left] < heap[mx])
     {
-        root = new Tree(val);
-        // return root;
+        mx = left;
     }
-    else if (root->val < val)
+    if (right < sz && heap[right] < heap[mx])
     {
-        root->right = Insert(root->right, val);
-        // root->right = new Tree(val);
+        mx = right;
     }
-    else
+
+    if (mx != i)
     {
-        root->left = Insert(root->left, val);
-        // root->left = new Tree(val);
+        swap(heap[i], heap[mx]);
+        heapify(mx);
     }
-    return root;
 }
 
-void Print(Tree *root)
+void build()
 {
-    if (root == NULL)
+    for (int i = sz / 2; i >= 0; i--)
     {
-        return;
+        heapify(i);
     }
-    cout << root->val << " ";
-    Print(root->left);
-    Print(root->right);
 }
 
-int Sum(Tree *root, vector<int> *v)
+void insert(unsigned long long value)
 {
-    if (root == NULL)
+    heap[sz++] = value;
+    int i = sz - 1;
+    while (i > 0)
     {
-        return 0;
-    }
-    Sum(root->left, v);
-    Sum(root->right, v);
-    if (root->left == NULL)
-    {
-        if (root->right != NULL)
+        int p = (i - 1) / 2;
+        if (heap[i] < heap[p])
         {
-            (*v).push_back(root->val + root->right->val);
-            root->val += root->right->val;
+            swap(heap[i], heap[p]);
+            i = p;
+        }
+        else
+        {
+            break;
         }
     }
-    else
+}
+
+void deleteMin()
+{
+    swap(heap[0], heap[sz - 1]);
+    sz--;
+    heapify(0);
+}
+
+void print()
+{
+    for (int i = 0; i < sz; i++)
     {
-        (*v).push_back(root->val + root->left->val);
-        root->val += root->left->val;
+        cout << heap[i] << " ";
     }
-    return 0;
+    cout << endl;
+}
+
+void heapsort()
+{
+    build();
+    // int s = sz;
+    while(sz > 1)
+    {
+        swap(heap[0], heap[sz-1]);
+        sz--;
+        heapify(0);
+    }
 }
 
 int main()
 {
-    vector<int> v;
-    Tree *root = NULL;
-    int n, x;
-    cin >> n;
-    for (int i(0); i < n; i++)
+    cin >> sz;
+    for (int i = 0; i < sz; i++)
     {
-        cin >> x;
-        root = Insert(root, x);
-    }
-    Print(root);
-    cout << endl;
-    Sum(root, &v);
-    v.push_back(v[v.size() - 1] + root->right->val);
-    int sum = 0;
-    for (int i(0); i < v.size(); i++)
-    {
-        sum += v[i];
-        cout << v[i] << " ";
+        cin >> heap[i];
     }
 
-    cout << endl
-         << sum << endl;
-    return 0;
+    build();
+
+    unsigned long long ans = 0;
+
+    while (sz > 1)
+    {
+        unsigned long long a = heap[0];
+        deleteMin();
+        unsigned long long b = heap[0];
+        deleteMin();
+        ans += a + b;
+        insert(a + b);
+    }
+
+    cout << ans << endl;
+    // int n;
+    // cin >> n;
+    // sz = n;
+    // for (int i = 0; i < sz; i++)
+    // {
+    //     cin >> heap[i];
+    // }
+    // heapsort();
+    // for(int i(0);i<n;i++){
+    //     cout << heap[i] << " ";
+    // }
+    // cout << endl;
 }
