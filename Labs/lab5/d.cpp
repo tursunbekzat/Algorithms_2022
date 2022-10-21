@@ -1,4 +1,6 @@
 #include <iostream>
+#include <algorithm>
+#include <cmath>
 using namespace std;
 
 unsigned long long heap[200010];
@@ -84,27 +86,30 @@ void heapsort()
 
 int main()
 {
-    cin >> sz;
+    int k;
+    cin >> sz >> k;
     for (int i = 0; i < sz; i++)
     {
         cin >> heap[i];
     }
 
     build();
-
-    unsigned long long ans = 0;
-
-    while (sz > 1)
+    // print();
+    int cnt = 0;
+    while (heap[0] < k)
     {
+        if (sz < 2)
+        {
+            cout << -1 << endl;
+            return 0;
+        }
+        cnt++;
         unsigned long long a = heap[0];
         deleteMin();
         unsigned long long b = heap[0];
         deleteMin();
-        ans += a + b;
-        insert(a + b);
+        insert(a + 2 * b);
     }
-    cout << heap[0] << endl;
-
-    cout << ans << endl;
+    cout << cnt << endl;
     return 0;
 }

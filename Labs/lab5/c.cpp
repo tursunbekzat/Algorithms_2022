@@ -11,11 +11,11 @@ void heapify(int i)
 
     int mx = i;
 
-    if (left < sz && heap[left] < heap[mx])
+    if (left < sz && heap[left] > heap[mx])
     {
         mx = left;
     }
-    if (right < sz && heap[right] < heap[mx])
+    if (right < sz && heap[right] > heap[mx])
     {
         mx = right;
     }
@@ -42,7 +42,7 @@ void insert(unsigned long long value)
     while (i > 0)
     {
         int p = (i - 1) / 2;
-        if (heap[i] < heap[p])
+        if (heap[i] > heap[p])
         {
             swap(heap[i], heap[p]);
             i = p;
@@ -54,7 +54,7 @@ void insert(unsigned long long value)
     }
 }
 
-void deleteMin()
+void deleteMax()
 {
     swap(heap[0], heap[sz - 1]);
     sz--;
@@ -84,27 +84,31 @@ void heapsort()
 
 int main()
 {
-    cin >> sz;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int k;  
+    cin >> sz >> k;
     for (int i = 0; i < sz; i++)
     {
         cin >> heap[i];
     }
 
     build();
+    // print();
 
     unsigned long long ans = 0;
 
-    while (sz > 1)
+    while (k > 0)
     {
+        k--;
         unsigned long long a = heap[0];
-        deleteMin();
-        unsigned long long b = heap[0];
-        deleteMin();
-        ans += a + b;
-        insert(a + b);
+        deleteMax();
+        ans += a;
+        insert(a-1);
+        // print();
     }
-    cout << heap[0] << endl;
+
+    // cout << heap[0] << endl;
 
     cout << ans << endl;
-    return 0;
 }
