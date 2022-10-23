@@ -10,12 +10,12 @@ void heapify(int i)
     int right = i + i + 2;
 
     int mx = i;
-    // cout << "left: " << left << "   right: " << right << endl;
-    if (left < q && heap[left] > heap[mx])
+
+    if (left < q && heap[left] < heap[mx])
     {
         mx = left;
     }
-    if (right < q && heap[right] > heap[mx])
+    if (right < q && heap[right] < heap[mx])
     {
         mx = right;
     }
@@ -42,7 +42,7 @@ void insert(unsigned long long value)
     while (i > 0)
     {
         int p = (i - 1) / 2;
-        if (heap[i] > heap[p])
+        if (heap[i] < heap[p])
         {
             swap(heap[i], heap[p]);
             i = p;
@@ -73,7 +73,6 @@ void print()
 void heapsort()
 {
     build();
-    // int s = sz;
     while (q > 1)
     {
         swap(heap[0], heap[q - 1]);
@@ -82,36 +81,39 @@ void heapsort()
     }
 }
 
+void PrintSum(int cnt){
+    long long sum = 0;
+    for(int i(0);i< 3;i++){
+        sum += i;
+    }
+}
+
 int main()
 {
-    cin >> q;
+    int k, j = 0, x;
+    cin >> q >> k;
+    string s;
+    int cnt = 0, count = 0;
+    for(int i(0);i<q;i++){
+        heap[i] = 0;
+    }
     for (int i = 0; i < q; i++)
     {
-        cin >> heap[i];
+        cin >> s;
+        if(s == "insert"){
+            cin >> x;
+            count++;
+            heap[j] = x;
+            j++;
+            heapsort();
+        }else{
+            if(count > k){
+                cnt++;
+            }
+            PrintSum(cnt);
+        }
     }
 
     build();
-    // print();
-    // unsigned long long ans = 0;
-    // cout << sz << endl;
-    while (q > 1)
-    {
-        // cout << 1 <<endl;
-        unsigned long long a = heap[0];
-        deleteMin();
-        unsigned long long b = heap[0];
-        deleteMin();
-        // ans += a - b;
-        if(a > b){
-            insert(a - b);
-        }else if(b > a){
-            insert(b - a);
-        }else{
-            insert(0);
-        }
-        // print();
-    }
-    cout << heap[0] << endl;
-
-    // cout << ans << endl;
+    return 0;
 }

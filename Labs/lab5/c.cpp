@@ -2,7 +2,7 @@
 using namespace std;
 
 unsigned long long heap[200010];
-int sz = 0;
+int q = 0;
 
 void heapify(int i)
 {
@@ -11,11 +11,11 @@ void heapify(int i)
 
     int mx = i;
 
-    if (left < sz && heap[left] > heap[mx])
+    if (left < q && heap[left] > heap[mx])
     {
         mx = left;
     }
-    if (right < sz && heap[right] > heap[mx])
+    if (right < q && heap[right] > heap[mx])
     {
         mx = right;
     }
@@ -29,7 +29,7 @@ void heapify(int i)
 
 void build()
 {
-    for (int i = sz / 2; i >= 0; i--)
+    for (int i = q / 2; i >= 0; i--)
     {
         heapify(i);
     }
@@ -37,8 +37,8 @@ void build()
 
 void insert(unsigned long long value)
 {
-    heap[sz++] = value;
-    int i = sz - 1;
+    heap[q++] = value;
+    int i = q - 1;
     while (i > 0)
     {
         int p = (i - 1) / 2;
@@ -56,14 +56,14 @@ void insert(unsigned long long value)
 
 void deleteMax()
 {
-    swap(heap[0], heap[sz - 1]);
-    sz--;
+    swap(heap[0], heap[q - 1]);
+    q--;
     heapify(0);
 }
 
 void print()
 {
-    for (int i = 0; i < sz; i++)
+    for (int i = 0; i < q; i++)
     {
         cout << heap[i] << " ";
     }
@@ -74,10 +74,10 @@ void heapsort()
 {
     build();
     // int s = sz;
-    while (sz > 1)
+    while (q > 1)
     {
-        swap(heap[0], heap[sz - 1]);
-        sz--;
+        swap(heap[0], heap[q - 1]);
+        q--;
         heapify(0);
     }
 }
@@ -87,8 +87,8 @@ int main()
     ios::sync_with_stdio(0);
     cin.tie(0);
     int k;  
-    cin >> sz >> k;
-    for (int i = 0; i < sz; i++)
+    cin >> q >> k;
+    for (int i = 0; i < q; i++)
     {
         cin >> heap[i];
     }
