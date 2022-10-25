@@ -2,24 +2,24 @@
 
 using namespace std;
 
-struct Node{
+struct Tree{
     int val;
-    Node *next;
-    Node(int val){
+    Tree *next;
+    Tree(int val){
         this->val = val;
         this->next = NULL;
     }
 };
 
-Node* Insert_Begin(int val, Node *head){
-    Node *newNode = new Node(val);
+Tree* Insert_Begin(int val, Tree *head){
+    Tree *newNode = new Tree(val);
     newNode->next = head;
     head = newNode;
     return head;
 }
 
-Node *Remove_Begin(Node *head){
-    Node *rmv = head;
+Tree *Remove_Begin(Tree *head){
+    Tree *rmv = head;
     head = head->next;
     delete rmv;
 }
@@ -27,8 +27,8 @@ Node *Remove_Begin(Node *head){
 
 
 int main(){
-    Node *a = new Node(5);
-    Node *b = new Node(15);
+    Tree *a = new Tree(5);
+    Tree *b = new Tree(15);
     a->next = b;
-    Node *head = a;
+    Tree *head = a;
 }

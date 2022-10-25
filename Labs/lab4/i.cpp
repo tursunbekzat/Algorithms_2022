@@ -1,32 +1,32 @@
 #include <iostream>
 using namespace std;
 
-struct Node {
-    int value;
+struct Tree {
+    int val;
     int cnt;
-    Node *left, *right;
+    Tree *left, *right;
 
-    Node(int value) {
-        this->value = value;
+    Tree(int value) {
+        this->val = value;
         cnt = 1;
         left = NULL;
         right = NULL;
     }
 };
 
-Node* getMin(Node *root) {
+Tree* getMin(Tree *root) {
     while (root->left) {
         root = root->left;
     }
     return root;
 }
 
-Node* insert(int value, Node *root) {
+Tree* insert(int value, Tree *root) {
     if (root == NULL) {
-        root = new Node(value);
-    } else if (root->value > value) {
+        root = new Tree(value);
+    } else if (root->val > value) {
         root->left = insert(value, root->left);
-    } else if (root->value < value) {
+    } else if (root->val < value) {
         root->right = insert(value, root->right);
     } else {
         root->cnt++;
@@ -34,12 +34,12 @@ Node* insert(int value, Node *root) {
     return root;
 }
 
-Node* remove(int value, Node *root) {
+Tree* remove(int value, Tree *root) {
     if (root == NULL) {
         return NULL;
-    } else if (root->value > value) {
+    } else if (root->val > value) {
         root->left = remove(value, root->left);
-    } else if (root->value < value) {
+    } else if (root->val < value) {
         root->right = remove(value, root->right);
     } else {
         if (root->cnt > 1) {
@@ -49,28 +49,28 @@ Node* remove(int value, Node *root) {
         } else if (!(root->right)) {
             return root->left;
         } else {
-            Node *mn = getMin(root->right);
-            root->value = mn->value;
+            Tree *mn = getMin(root->right);
+            root->val = mn->val;
             root->cnt = mn->cnt;
-            root->right = remove(mn->value, root->right);
+            root->right = remove(mn->val, root->right);
         }
     }
     return root;
 }
 
-int count(int value, Node *root) {
+int count(int value, Tree *root) {
     if (root == NULL) {
         return 0;
-    } else if (root->value == value) {
+    } else if (root->val == value) {
         return root->cnt;
-    } else if (root->value > value) {
+    } else if (root->val > value) {
         return count(value, root->left);
     } else {
         return count(value, root->right);
     }
 }
 
-int getHeight(Node *root) {
+int getHeight(Tree *root) {
     if (root == NULL) return 0;
     else {
         return 1 + max(
@@ -80,30 +80,30 @@ int getHeight(Node *root) {
     }
 }
 
-int getSize(Node *root) {
+int getSize(Tree *root) {
     if (root == NULL) return 0;
     else return 1 + getSize(root->left) + getSize(root->right);
 }
 
-void preorder(Node *root) {
+void preorder(Tree *root) {
     if (root == NULL) return;
-    cout << root->value << " ";
+    cout << root->val << " ";
     preorder(root->left);
     preorder(root->right);
 }
 
-void inorder(Node *root) {
+void inorder(Tree *root) {
     if (root == NULL) return;
     inorder(root->left);
-    cout << root->value << " ";
+    cout << root->val << " ";
     inorder(root->right);
 }
 
-void postorder(Node *root) {
+void postorder(Tree *root) {
     if (root == NULL) return;
     postorder(root->left);
     postorder(root->right);
-    cout << root->value << " ";
+    cout << root->val << " ";
 }
 
 int main() {
@@ -124,7 +124,7 @@ int main() {
     // }
 
     int n; cin >> n;
-    Node *root = NULL;
+    Tree *root = NULL;
     for (int i = 0; i < n; i++) {
         string op;
         int x;

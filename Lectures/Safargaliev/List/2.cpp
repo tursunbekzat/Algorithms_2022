@@ -2,12 +2,12 @@
 
 using namespace std;
 
-struct Node
+struct Tree
 {
     int val;
-    Node *next;
-    Node *prev;
-    Node(int val)
+    Tree *next;
+    Tree *prev;
+    Tree(int val)
     {
         this->val = val;
         this->next = NULL;
@@ -15,18 +15,18 @@ struct Node
     }
 };
 
-Node *Insert_Begin(int val, Node *begin)
+Tree *Insert_Begin(int val, Tree *begin)
 {
-    Node *newNode = new Node(val);
+    Tree *newNode = new Tree(val);
     newNode->next = begin;
     begin->prev = newNode;
     begin = newNode;
     return begin;
 }
 
-Node *Remove_Begin(Node *begin, Node *end)
+Tree *Remove_Begin(Tree *begin, Tree *end)
 {
-    Node *rmv = begin;
+    Tree *rmv = begin;
     begin = begin->next;
     begin = begin->next;
     begin->prev = NULL;
@@ -34,22 +34,22 @@ Node *Remove_Begin(Node *begin, Node *end)
     return begin;
 }
 
-Node *Remove_End(Node *begin, Node *end)
+Tree *Remove_End(Tree *begin, Tree *end)
 {
 }
 
-Node *Insert_End(int val, Node *end)
+Tree *Insert_End(int val, Tree *end)
 {
-    Node *newNode = new Node(val);
+    Tree *newNode = new Tree(val);
     newNode->prev = end;
     end->next = newNode;
     end = newNode;
     return end;
 }
 
-int Get_Size(Node *begin)
+int Get_Size(Tree *begin)
 {
-    Node *gs = begin;
+    Tree *gs = begin;
     int count = 0;
     while (gs)
     {
@@ -59,10 +59,10 @@ int Get_Size(Node *begin)
     return count;
 }
 
-Node *Insert(int val, int pos, Node *begin, Node *end)
+Tree *Insert(int val, int pos, Tree *begin, Tree *end)
 {
-    Node *in = begin;
-    Node *newNode = new Node(val);
+    Tree *in = begin;
+    Tree *newNode = new Tree(val);
     if (pos == 0)
     {
         return Insert_Begin(val, begin);
@@ -82,18 +82,18 @@ Node *Insert(int val, int pos, Node *begin, Node *end)
     return begin;
 }
 
-Node *Remove_Pos(int pos, Node *begin, Node *end)
+Tree *Remove_Pos(int pos, Tree *begin, Tree *end)
 {
     if (pos == 0)
         return Remove_Begin(begin, end);
     if (pos == Get_Size(begin) - 1)
         return Remove_End(begin, end);
-    Node *cur = begin;
+    Tree *cur = begin;
     for (int i(0); i < pos - 1; i++)
     {
         cur = cur->next;
     }
-    Node *tmp = cur->next;
+    Tree *tmp = cur->next;
     cur->next->next->prev = cur;
     cur->next = cur->next->next;
     delete tmp;
@@ -102,8 +102,8 @@ Node *Remove_Pos(int pos, Node *begin, Node *end)
 
 int main()
 {
-    Node *a = new Node(5);
-    Node *b = new Node(15);
+    Tree *a = new Tree(5);
+    Tree *b = new Tree(15);
     a->next = b;
-    Node *begin = a;
+    Tree *begin = a;
 }

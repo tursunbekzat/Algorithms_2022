@@ -3,28 +3,28 @@
 using namespace std;
 
 /* Constructor for node in double linked list */
-struct Node{
+struct Tree{
     char val;
-    Node *prev;
-    Node *next;
-    Node(char x): val(x), next(nullptr), prev(nullptr) {}
-    Node(char x, Node *last): val(x), next(nullptr), prev(last) {}
+    Tree *prev;
+    Tree *next;
+    Tree(char x): val(x), next(nullptr), prev(nullptr) {}
+    Tree(char x, Tree *last): val(x), next(nullptr), prev(last) {}
 };
 
 /* Constructor for double linked list with member functions */
 struct DLL{
 
     /* Set head and tail to null */
-    Node *head = nullptr;
-    Node *tail = nullptr;
+    Tree *head = nullptr;
+    Tree *tail = nullptr;
 
     /* Function that creates a node with value x and inserts it at the end */
-    Node* push_back(char x)
+    Tree* push_back(char x)
     {
         /* Make new node head and tail if list is empty */
         if (head == nullptr)
         {
-            Node *new_node = new Node(x);
+            Tree *new_node = new Tree(x);
             head = new_node;
             tail = new_node;
 
@@ -32,7 +32,7 @@ struct DLL{
         }
 
         /* Else make it the tail */
-        Node *new_node = new Node(x, tail);
+        Tree *new_node = new Tree(x, tail);
         tail -> next = new_node;
         tail = new_node;
 
@@ -73,7 +73,7 @@ struct DLL{
         
         if (head == nullptr) return;
 
-        Node *prev = nullptr;
+        Tree *prev = nullptr;
         while (head != nullptr)
         {
             prev = head;
@@ -96,7 +96,7 @@ int main()
     char x;
     for (int i = 0; i < N; i++)
     {
-        Node* inDLL[256] = {nullptr};           // To store pointers to the dll nodes
+        Tree* inDLL[256] = {nullptr};           // To store pointers to the dll nodes
         bool repeated[256] = {0};               // To know if char x is repeated or not
         DLL dll;                                // Create double linked list object
 

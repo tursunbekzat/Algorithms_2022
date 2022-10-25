@@ -38,13 +38,13 @@ Tree *Insert(Tree *root, int val)
     return root;
 }
 
-void preorder(Tree *root)
+void Preorder(Tree *root)
 {
     if (root == NULL)
         return;
     cout << root->val << " ";
-    preorder(root->left);
-    preorder(root->right);
+    Preorder(root->left);
+    Preorder(root->right);
 }
 
 void inorder(Tree *root)
@@ -56,12 +56,12 @@ void inorder(Tree *root)
     inorder(root->right);
 }
 
-void postorder(Tree *root)
+void Postorder(Tree *root)
 {
     if (root == NULL)
         return;
-    postorder(root->left);
-    postorder(root->right);
+    Postorder(root->left);
+    Postorder(root->right);
     cout << root->val << " ";
 }
 

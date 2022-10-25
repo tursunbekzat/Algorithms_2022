@@ -1,20 +1,20 @@
 #include<iostream>
 using namespace std;
   
-struct Node
+struct Tree
 {
    int data;
-   struct Node *next;
+   struct Tree *next;
 };
 //insert a new node in an empty list
-struct Node *insertInEmpty(struct Node *last, int new_data)
+struct Tree *insertInEmpty(struct Tree *last, int new_data)
 {
    // if last is not null then list is not empty, so return
    if (last != NULL)
    return last;
   
    // allocate memory for node
-   struct Node *temp = new Node;
+   struct Tree *temp = new Tree;
   
    // Assign the data.
    temp -> data = new_data;
@@ -26,14 +26,14 @@ struct Node *insertInEmpty(struct Node *last, int new_data)
    return last;
 }
 //insert new node at the beginning of the list
-struct Node *insertAtBegin(struct Node *last, int new_data)
+struct Tree *insertAtBegin(struct Tree *last, int new_data)
 {
    //if list is empty then add the node by calling insertInEmpty
    if (last == NULL)
    return insertInEmpty(last, new_data);
   
    //else create a new node
-   struct Node *temp = new Node;
+   struct Tree *temp = new Tree;
   
    //set new data to node
    temp -> data = new_data;
@@ -43,14 +43,14 @@ struct Node *insertAtBegin(struct Node *last, int new_data)
    return last;
 }
 //insert new node at the end of the list
-struct Node *insertAtEnd(struct Node *last, int new_data)
+struct Tree *insertAtEnd(struct Tree *last, int new_data)
 {
    //if list is empty then add the node by calling insertInEmpty
    if (last == NULL)
    return insertInEmpty(last, new_data);
   
    //else create a new node
-   struct Node *temp = new Node;
+   struct Tree *temp = new Tree;
   
    //assign data to new node
    temp -> data = new_data;
@@ -62,19 +62,19 @@ struct Node *insertAtEnd(struct Node *last, int new_data)
 }
   
 //insert a new node in between the nodes
-struct Node *insertAfter(struct Node *last, int new_data, int after_item)
+struct Tree *insertAfter(struct Tree *last, int new_data, int after_item)
 {
    //return null if list is empty
    if (last == NULL)
    return NULL;
   
-   struct Node *temp, *p;
+   struct Tree *temp, *p;
    p = last -> next;
    do
    {
       if (p ->data == after_item)
       {
-         temp = new Node;
+         temp = new Tree;
          temp -> data = new_data;
          temp -> next = p -> next;
          p -> next = temp;
@@ -91,8 +91,8 @@ struct Node *insertAfter(struct Node *last, int new_data, int after_item)
   
 }
 //traverse the circular linked list
-void traverseList(struct Node *last) {
-   struct Node *p;
+void traverseList(struct Tree *last) {
+   struct Tree *p;
   
    // If list is empty, return.
    if (last == NULL) {
@@ -113,7 +113,7 @@ do {
    }
   
 //delete the node from the list
-void deleteNode(Node** head, int key)
+void deleteNode(Tree** head, int key)
 {
    // If linked list is empty retun
    if (*head == NULL)
@@ -124,7 +124,7 @@ void deleteNode(Node** head, int key)
       free(*head);
       *head=NULL;
       }
-Node *last=*head,*d;
+Tree *last=*head,*d;
   
 // If key is the head
 if((*head)->data==key) {
@@ -158,7 +158,7 @@ if(last->next->data==key) {
 // main Program
 int main()
 {
-   struct Node *last = NULL;
+   struct Tree *last = NULL;
   
    last = insertInEmpty(last, 30);
    last = insertAtBegin(last, 20);

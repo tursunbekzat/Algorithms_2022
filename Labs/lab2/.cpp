@@ -5,21 +5,21 @@
 using namespace std;
 
 // A linked list node
-class Node
+class Tree
 {
 	public:
 	int data;
-	Node *next;
+	Tree *next;
 };
 
 // Given a reference (pointer to pointer)
 // to the head of a list and an int, inserts
 // a new node on the front of the list.
-void push(Node** head_ref, int new_data)
+void push(Tree** head_ref, int new_data)
 {
 
 	// 1. allocate node
-	Node* new_node = new Node();
+	Tree* new_node = new Tree();
 
 	// 2. put in the data
 	new_node->data = new_data;
@@ -34,7 +34,7 @@ void push(Node** head_ref, int new_data)
 
 // Given a node prev_node, insert a new
 // node after the given prev_node
-void insertAfter(Node* prev_node, int new_data)
+void insertAfter(Tree* prev_node, int new_data)
 {
 	// 1. check if the given prev_node
 	// is NULL
@@ -45,7 +45,7 @@ void insertAfter(Node* prev_node, int new_data)
 	}
 
 	// 2. allocate new node
-	Node* new_node = new Node();
+	Tree* new_node = new Tree();
 
 	// 3. put in the data
 	new_node->data = new_data;
@@ -62,14 +62,14 @@ void insertAfter(Node* prev_node, int new_data)
 // Given a reference (pointer to pointer)
 // to the head of a list and an int,
 // appends a new node at the end
-void append(Node** head_ref, int new_data)
+void append(Tree** head_ref, int new_data)
 {
 
 	// 1. allocate node
-	Node* new_node = new Node();
+	Tree* new_node = new Tree();
 
 	//used in step 5
-	Node *last = *head_ref;
+	Tree *last = *head_ref;
 
 	// 2. put in the data
 	new_node->data = new_data;
@@ -100,7 +100,7 @@ void append(Node** head_ref, int new_data)
 
 // This function prints contents of
 // linked list starting from head
-void printList(Node *node)
+void printList(Tree *node)
 {
 	while (node != NULL)
 	{
@@ -114,7 +114,7 @@ int main()
 {
 
 	// Start with the empty list
-	Node* head = NULL;
+	Tree* head = NULL;
 	
 	// Insert 6. So linked list becomes 6->NULL
 	append(&head, 6);

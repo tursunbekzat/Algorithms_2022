@@ -2,21 +2,21 @@
 using namespace std;
 
 /* Node data structure for linked list */
-struct Node {
+struct Tree {
     int val;
-    Node *next;
+    Tree *next;
     
-    Node (int val){
+    Tree (int val){
         this -> val = val;
         this -> next = nullptr;
     }
 };
 
 /* To append elements into the linked list */
-Node* push(Node **head, int data, Node **last)
+Tree* push(Tree **head, int data, Tree **last)
 {
     /* Allocate and store data */
-    Node *new_node = new Node(data);
+    Tree *new_node = new Tree(data);
 
     /* Make new node to be head if the linked list is empty */
     if (*head == NULL)
@@ -31,12 +31,12 @@ Node* push(Node **head, int data, Node **last)
 }
 
 /* To find maximum subarray sum */
-int findMaxSum(Node *head)
+int findMaxSum(Tree *head)
 {
     int tmp_max = 0;
     long long int MAX = INTMAX_MIN;
 
-    Node *iter = head;
+    Tree *iter = head;
     while (iter != NULL)
     {
         /* Sum the value of the node */
@@ -66,8 +66,8 @@ int main()
     cin >> n;
 
     int x;
-    Node *head = nullptr;
-    Node *tail = nullptr;
+    Tree *head = nullptr;
+    Tree *tail = nullptr;
     for (size_t i = 0; i < n; i++)
     {
         cin >> x;
