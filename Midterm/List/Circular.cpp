@@ -1,172 +1,179 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
-  
+
 struct Tree
 {
    int data;
    struct Tree *next;
 };
-//insert a new node in an empty list
+// insert a new node in an empty list
 struct Tree *insertInEmpty(struct Tree *last, int new_data)
 {
    // if last is not null then list is not empty, so return
    if (last != NULL)
-   return last;
-  
+      return last;
+
    // allocate memory for node
    struct Tree *temp = new Tree;
-  
+
    // Assign the data.
-   temp -> data = new_data;
+   temp->data = new_data;
    last = temp;
-  
+
    // Create the link.
    last->next = last;
-  
+
    return last;
 }
-//insert new node at the beginning of the list
+// insert new node at the beginning of the list
 struct Tree *insertAtBegin(struct Tree *last, int new_data)
 {
-   //if list is empty then add the node by calling insertInEmpty
+   // if list is empty then add the node by calling insertInEmpty
    if (last == NULL)
-   return insertInEmpty(last, new_data);
-  
-   //else create a new node
+      return insertInEmpty(last, new_data);
+
+   // else create a new node
    struct Tree *temp = new Tree;
-  
-   //set new data to node
-   temp -> data = new_data;
-   temp -> next = last -> next;
-   last -> next = temp;
-  
+
+   // set new data to node
+   temp->data = new_data;
+   temp->next = last->next;
+   last->next = temp;
+
    return last;
 }
-//insert new node at the end of the list
+// insert new node at the end of the list
 struct Tree *insertAtEnd(struct Tree *last, int new_data)
 {
-   //if list is empty then add the node by calling insertInEmpty
+   // if list is empty then add the node by calling insertInEmpty
    if (last == NULL)
-   return insertInEmpty(last, new_data);
-  
-   //else create a new node
+      return insertInEmpty(last, new_data);
+
+   // else create a new node
    struct Tree *temp = new Tree;
-  
-   //assign data to new node
-   temp -> data = new_data;
-   temp -> next = last -> next;
-   last -> next = temp;
+
+   // assign data to new node
+   temp->data = new_data;
+   temp->next = last->next;
+   last->next = temp;
    last = temp;
-  
+
    return last;
 }
-  
-//insert a new node in between the nodes
+
+// insert a new node in between the nodes
 struct Tree *insertAfter(struct Tree *last, int new_data, int after_item)
 {
-   //return null if list is empty
+   // return null if list is empty
    if (last == NULL)
-   return NULL;
-  
+      return NULL;
+
    struct Tree *temp, *p;
-   p = last -> next;
+   p = last->next;
    do
    {
-      if (p ->data == after_item)
+      if (p->data == after_item)
       {
          temp = new Tree;
-         temp -> data = new_data;
-         temp -> next = p -> next;
-         p -> next = temp;
-        
+         temp->data = new_data;
+         temp->next = p->next;
+         p->next = temp;
+
          if (p == last)
-         last = temp;
+            last = temp;
          return last;
-       }
-   p = p -> next;
- } while(p != last -> next);
-  
-   cout << "The node with data "<<after_item << " is not present in the list." << endl;
+      }
+      p = p->next;
+   } while (p != last->next);
+
+   cout << "The node with data " << after_item << " is not present in the list." << endl;
    return last;
-  
 }
-//traverse the circular linked list
-void traverseList(struct Tree *last) {
+// traverse the circular linked list
+void traverseList(struct Tree *last)
+{
    struct Tree *p;
-  
+
    // If list is empty, return.
-   if (last == NULL) {
+   if (last == NULL)
+   {
       cout << "Circular linked List is empty." << endl;
       return;
-      }
-p = last -> next; // Point to the first Node in the list.
-  
-// Traverse the list starting from first node until first node is visited again
-  
-do {
-      cout << p -> data << "==>";
-      p = p -> next;
-      } while(p != last->next);
-   if(p == last->next)
-   cout<<p->data;
-   cout<<"\n\n";
    }
-  
-//delete the node from the list
-void deleteNode(Tree** head, int key)
+   p = last->next; // Point to the first Node in the list.
+
+   // Traverse the list starting from first node until first node is visited again
+
+   do
+   {
+      cout << p->data << "==>";
+      p = p->next;
+   } while (p != last->next);
+   if (p == last->next)
+      cout << p->data;
+   cout << "\n\n";
+}
+
+// delete the node from the list
+void deleteNode(Tree **head, int key)
 {
    // If linked list is empty retun
    if (*head == NULL)
-   return;
-  
+      return;
+
    // If the list contains only a single node,delete that node; list is empty
-   if((*head)->data==key && (*head)->next==*head) {
+   if ((*head)->data == key && (*head)->next == *head)
+   {
       free(*head);
-      *head=NULL;
-      }
-Tree *last=*head,*d;
-  
-// If key is the head
-if((*head)->data==key) {
-   while(last->next!=*head) // Find the last node of the list
-   last=last->next;
-  
-   // point last node to next of head or second node of the list
-   last->next=(*head)->next;
-   free(*head);
-   *head=last->next;
+      *head = NULL;
    }
-  
-// end of list is reached or node to be deleted not there in the list
-while(last->next!=*head&&last->next->data!=key) {
-   last=last->next;
-}
-// node to be deleted is found, so free the memory and display the list
-if(last->next->data==key) {
-      d=last->next;
-      last->next=d->next;
-      cout<<"The node with data "<<key<<" deleted from the list"<<endl;
+   Tree *last = *head, *d;
+
+   // If key is the head
+   if ((*head)->data == key)
+   {
+      while (last->next != *head) // Find the last node of the list
+         last = last->next;
+
+      // point last node to next of head or second node of the list
+      last->next = (*head)->next;
+      free(*head);
+      *head = last->next;
+   }
+
+   // end of list is reached or node to be deleted not there in the list
+   while (last->next != *head && last->next->data != key)
+   {
+      last = last->next;
+   }
+   // node to be deleted is found, so free the memory and display the list
+   if (last->next->data == key)
+   {
+      d = last->next;
+      last->next = d->next;
+      cout << "The node with data " << key << " deleted from the list" << endl;
       free(d);
-      cout<<endl;
-      cout<<"Circular linked list after deleting "<<key<<" is as follows:"<<endl;
+      cout << endl;
+      cout << "Circular linked list after deleting " << key << " is as follows:" << endl;
       traverseList(last);
-      }
-   else
-   cout<<"The node with data "<< key << " not found in the list"<<endl;
    }
-  
+   else
+      cout << "The node with data " << key << " not found in the list" << endl;
+}
+
 // main Program
 int main()
 {
    struct Tree *last = NULL;
-  
+
    last = insertInEmpty(last, 30);
    last = insertAtBegin(last, 20);
    last = insertAtBegin(last, 10);
    last = insertAtEnd(last, 40);
    last = insertAtEnd(last, 60);
-   last = insertAfter(last, 50,40 );
-   cout<<"The circular linked list created is as follows:"<<endl;
+   last = insertAfter(last, 50, 40);
+   cout << "The circular linked list created is as follows:" << endl;
    traverseList(last);
-   deleteNode(&last,10);
+   deleteNode(&last, 10);
    return 0;
+}
