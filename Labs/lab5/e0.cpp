@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-unsigned long long heap[200010];
+unsigned long long heap[200010000];
 int q = 0;
 
 void heapify(int i)
