@@ -11,15 +11,8 @@ void heapify(int i)
 
     int mx = i;
 
-    if (left < q && heap[left] < heap[mx])
-    {
-        mx = left;
-    }
-    if (right < q && heap[right] < heap[mx])
-    {
-        mx = right;
-    }
-
+    if (left < q && heap[left] < heap[mx])   mx = left;
+    if (right < q && heap[right] < heap[mx]) mx = right;
     if (mx != i)
     {
         swap(heap[i], heap[mx]);
