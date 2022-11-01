@@ -25,7 +25,7 @@ void heapify(int i)
         swap(heap[i], heap[mx]);
         heapify(mx);
     }
-}
+} 
 
 void build()
 {

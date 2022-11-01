@@ -2,83 +2,107 @@
 #include <algorithm>
 using namespace std;
 
-unsigned long long a[1000000001];
+unsigned long long heap[10000001];
+int n;
+int sz = 0;
 
-void serach(unsigned long long k, int p)
-{
-    int l = 0;
-    int r = p;
-    while (l <= r)
-    {
-        int m = (l + r) / 2;
-        unsigned long long ans = a[m] + a[p - 1 - m];
-        if (ans == k)
-        {
-            cout << 1 << " " << 2;
-            return;
-        }
-        if(ans < k){
-            l = m + 1;
-        }else{
-            r = m - 1;
-        }
-    }
-}
-
-void heapify(int i, int n)
+void heapify(int i)
 {
     int left = i + i + 1;
     int right = i + i + 2;
 
     int mx = i;
 
-    if (left < n && a[left] > a[mx])
+    if (left < sz && heap[left] > heap[mx])
     {
         mx = left;
     }
-    if (right < n && a[right] > a[mx])
+    if (right < sz && heap[right] > heap[mx])
     {
         mx = right;
     }
 
     if (mx != i)
     {
-        swap(a[i], a[mx]);
-        heapify(mx, n);
+        swap(heap[i], heap[mx]);
+        heapify(mx);
     }
 }
 
-void build(int n){
-    for(int i(n/2);i>=0;i--){
-        heapify(i, n);
+void build()
+{
+    for (int i = sz / 2; i >= 0; i--)
+    {
+        heapify(i);
     }
 }
 
-void heapsort(int n){
-    build(n);
-
-    while(n > 1){
-        swap(a[0], a[n - 1]);
-        n--;
-        heapify(0, n);
+void heapsort()
+{
+    build();
+    while (sz > 0)
+    {
+        swap(heap[0], heap[sz - 1]);
+        sz--;
+        heapify(0);
     }
+}
+
+void print()
+{
+    for (int i = 0; i < n; i++)
+    {
+        cout << heap[i] << " ";
+    }
+    cout << endl;
+}
+
+bool search(unsigned long long m)
+{
+    int l = 0;
+    int r = n;
+    while (l <= r)
+    {
+        int mid = (l + r) / 2;
+        if (heap[mid] < m)
+        {
+            l = mid + 1;
+        }
+        else if (heap[mid] > m)
+        {
+            r = mid - 1;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 int main()
 {
-    int n;
     unsigned long long m;
     cin >> m >> n;
 
     for (int i(0); i < n; i++)
     {
-        cin >> a[i];
+        cin >> heap[i];
     }
 
-    int p = n;
-    heapsort(n);
+    sz = n;
+    heapsort();
 
-    serach(m, p);
+    print();
+
+    for (int i(0); i < n; i++)
+    {
+        if (search(m - heap[i]))
+        {
+            cout << heap[i] << " " << m - heap[i] << endl;
+            break;
+        }
+    }
 
     return 0;
 }
