@@ -1,20 +1,39 @@
 #include <iostream>
 using namespace std;
 
-int sz = 0;
-unsigned long long heap[1000001];
+int sz;
+unsigned long long heap[20000001];
+
+void print(int j)
+{
+    unsigned long long sum = 0;
+    for (int i(0); i < sz - j; i++)
+    {
+        sum += heap[i];
+    }
+    cout << sum << endl;
+}
+
+void insert(unsigned long long x)
+{
+    heap[sz] = x;
+}
 
 void heapify(int i)
 {
-    int l = 2 * i + 1, r = 2 * i + 2, m = i;
-    if (l < sz && heap[l] > heap[m])
-        m = l;
-    if (l < sz && heap[r] > heap[m])
-        m = r;
-    if (m != i)
-    {
-        swap(heap[i], heap[m]);
-        heapify(m);
+    int l = i + i + 1;
+    int r = i + i + 2;
+    int mid = i;
+    if(l < sz && heap[l] > heap[mid]){
+        mid = l;
+    }
+    if(l < sz && heap[l] > heap[mid]){
+        mid = l;
+    }
+    if(mid != i){
+        swap(heap[i], heap[mid]);
+        heapify(mid);
+
     }
 }
 
@@ -29,60 +48,40 @@ void build()
 void heapsort()
 {
     build();
-    int size = sz;
-    while (size > 1)
-    {
-        swap(heap[0], heap[size - 1]);
-        size--;
-        heapify(0);
-    }
-}
-
-void sum(int j)
-{
-    unsigned long long sum = 0;
-    for (int i(0); i < sz - j; i++)
-    {
-        sum += heap[i];
-    }
-    cout << sum << endl;
-}
-
-void print()
-{
-    for (int i(0); i < sz; i++)
-    {
-        cout << heap[i] << " ";
-    }
-    cout << endl;
 }
 
 int main()
 {
-    int n, m;
-    cin >> n >> m;
-
-    string c;
-    int x, cnt = 0, j = 0;
-    for (int i(0); i < n; i++)
+    cin >> sz;
+    int k;
+    cin >> k;
+    string s;
+    unsigned long long x;
+    int j = 0, cnt = 0;
+    for (int i(0); i < sz; i++)
     {
-        cin >> c;
-        if (cnt >= n)
+        heap[i] = 0;
+    }
+    heapsort();
+    for (int i(0); i < sz; i++)
+    {
+        cin >> s;
+        if (s == "print")
         {
-            j++;
-        }
-        else if (c == "insert")
-        {
-            cnt++;
-            cin >> x;
-            heap[sz] = x;
-            sz++;
+            heapsort();
+            print(j);
         }
         else
         {
-            heapsort();
-            print();
-            sum(j);
+
+            cnt++;
+            cin >> x;
+            if (cnt > k)
+            {
+                j++;
+                continue;
+            }
+            insert(x);
         }
     }
 

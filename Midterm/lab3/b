@@ -1,0 +1,48 @@
+int count = 0, sum = 0, sum1, u;
+    (*maxi) = 0;
+    cout << "maxi = " << (*maxi) << endl;
+    for (int i(0); i < n; i++)
+    {
+        sum += ar[i];
+        if (sum >= md)
+        {
+            cout << "initial sum in div = " << sum << endl;
+            if (sum <= md)
+            {
+                u = sum;
+            }
+            else
+            {
+                u = sum - ar[i];
+            }
+            if ((*maxi) < u)
+            {
+                (*maxi) = u;
+            }
+            cout << "maxi = " << *maxi << endl;
+            cout << "u = " << u << endl;
+            sum1 = sum;
+            if (u >= md)
+                count++;
+            if (sum != md)
+            {
+                cout << "sum in numdiv = " << sum - ar[i] << endl;
+                sum = ar[i];
+            }
+            else
+            {
+                cout << "sum in div = " << sum << endl;
+                sum = 0;
+            }
+        }
+    }
+    if((*maxi) < sum){
+        (*maxi) = sum;
+    }
+    if (sum1 != sum && sum != md)
+    {
+        count++;
+    }
+    cout << "last maxi = " << (*maxi) << endl; 
+    cout << "count = " << count - 1 << "\nend of the numdiv\n\n\n";
+    return count - 1;
