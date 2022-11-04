@@ -91,19 +91,23 @@ int main()
 
     build();
 
-    unsigned long long ans = 0;
+    // unsigned long long ans = 0;
 
-    while (q > 1)
-    {
-        unsigned long long a = heap[0];
-        deleteMin();
-        unsigned long long b = heap[0];
-        deleteMin();
-        ans += a + b;
-        insert(a + b);
-    }
-    cout << heap[0] << endl;
+    // while (q > 1)
+    // {
+    //     unsigned long long a = heap[0];
+    //     deleteMin();
+    //     unsigned long long b = heap[0];
+    //     deleteMin();
+    //     ans += a + b;
+    //     insert(a + b);
+    // }
+    // cout << heap[0] << endl;
 
-    cout << ans << endl;
+    // cout << ans << endl;
+    int sz = q;
+    heapsort();
+    q = sz;
+    print();
     return 0;
 }

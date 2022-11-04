@@ -1,159 +1,92 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-
 using namespace std;
 
-unsigned long long heap[10010000], heap1[10010000];
-int sz = 0;
-
-void heapify(int i)
+struct MaxHeap
 {
-    int l = 2 * i + 1, r = 2 * i + 2;
-    int mx = i;
-    if (i < sz && heap[mx] < heap[l])
+    int size;
+    vector<int> v;
+
+    MaxHeap();
+    void insert(int val);
+    int update(int i);
+    void print();
+    void shiftup(int i);
+};
+
+MaxHeap ::MaxHeap()
+{
+    size = 0;
+}
+
+void MaxHeap ::shiftup(int i)
+{
+    if (i == 0)
+        return;
+    int p = (i - 1) / 2;
+    if (v[p] < v[i])
     {
-        mx = l;
-    }
-    if (i < sz && heap[mx] < heap[r])
-    {
-        mx = r;
-    }
-    if (mx != i)
-    {
-        swap(heap[i], heap[mx]);
-        heapify(mx);
+        swap(v[p], v[i]);
+        shiftup(p);
     }
 }
 
-void heapify1(int i)
+void MaxHeap ::insert(int val)
 {
-    int l = 2 * i + 1, r = 2 * i + 2;
-    int mx = i;
-    if (i < sz && heap1[mx] < heap1[l])
-    {
-        mx = l;
-    }
-    if (i < sz && heap1[mx] < heap1[r])
-    {
-        mx = r;
-    }
-    if (mx != i)
-    {
-        swap(heap1[i], heap1[mx]);
-        heapify1(mx);
-    }
+    size++;
+    if (size > v.size())
+        v.push_back(val);
+    else
+        v[size - 1] = val;
+    shiftup(size - 1);
 }
 
-void build()
+int MaxHeap ::update(int i)
 {
-    for (int i = sz / 2; i >= 0; i--)
-    {
-        heapify(i);
+    if (i == 0)
+        return 0;
+    int p = (i - 1) / 2;
+    if(v[p] < v[i]){
+        swap(v[p], v[i]);
+        return update(p);
     }
+    return i;
 }
 
-void build1()
-{
-    for (int i = sz / 2; i >= 0; i--)
-    {
-        heapify1(i);
-    }
-}
-
-void print()
-{
-    for (int i(0); i < sz; i++)
-    {
-        cout << heap[i] << " ";
+void MaxHeap :: print(){
+    for(int s : v){
+        cout << s << " ";
     }
     cout << endl;
-}
-
-void print1()
-{
-    for (int i(0); i < sz; i++)
-    {
-        cout << heap[i] << " ";
-    }
-    cout << endl;
-}
-
-void heapsort()
-{
-    build1();
-    int s = sz;
-    while (sz > 1)
-    {
-        swap(heap1[0], heap1[sz - 1]);
-        sz--;
-        heapify1(0);
-    }
-    sz = s;
-}
-
-int binarySearch(int k, int l, int r)
-{
-    cout << "bs print1: \n";
-    print1();
-    while (l <= r)
-    {
-        int mid = (l + r) / 2;
-        cout << "heap " << heap1[mid] << endl;
-        if (heap1[mid] < k)
-        {
-            l = mid + 1;
-        }
-        else if (heap1[mid] > k)
-        {
-            r = mid - 1;
-        }
-        else
-        {
-            return mid;
-        }
-    }
-    return 0;
 }
 
 int main()
 {
-    cin >> sz;
-    for (int i(0); i < sz; i++)
-    {
-        cin >> heap[i];
-    }
-    build();
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
-    vector<unsigned long long> v, v1;
+    int n;
+    cin >> n;
+
+    MaxHeap heap;
+
     int k;
-    cin >> k;
-    int j, c;
-
-    for (int i(0); i < k; i++)
-    {
-        cin >> j >> c;
-        heap[j - 1] = c + heap[j - 1];
-        v.push_back(heap[j - 1]);
-    }
-    build();
-    for (int i(0); i < sz; i++)
-    {
-        heap1[i] = heap[i];
-    }
-    print();
-    print1();
-    heapsort();
-    print1();
-
-    cout << "size " << sz << endl;
-    for (int i(0); i < k; i++)
-    {
-        cout << "v[i] = " << v[i] << endl;
-        cout << binarySearch(v[i], 0, sz) << endl;
+    for(int i(0);i<n;i++){
+        cin >> k;
+        heap.insert(k);
     }
 
-    print();
+    int q;
+    cin >> q;
+
+    int i, val;
+    while(q--){
+        cin >> i >> val;
+        heap.v[i - 1] += val;
+        cout << heap.update(i - 1) + 1 << "\n";
+    }
+
+    heap.print();
 
     return 0;
 }
