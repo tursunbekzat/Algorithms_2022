@@ -5,6 +5,10 @@ using namespace std;
 
 deque<int> dq;
 
+void push(int y){
+    dq.push_back(y);
+}
+
 void print()
 {
     for (int i(0); i < dq.size(); i++)
@@ -22,31 +26,22 @@ int main()
     int n;
     cin >> n;
 
-    bool ok = true;
-    int x, y;
     int cnt = 0;
-    while (n > 0)
+    int x, y;
+    while (n--)
     {
         cin >> x;
         if (x == 1)
         {
             cin >> y;
-            if (ok)
-                dq.push_back(y);
-            else
-            {
-                dq.push_front(y);
-            }
+            push(y);
         }
-        else
-        {
-            ok = !ok;
+        else{
             cnt++;
         }
-        n -= 1;
     }
-    if(cnt % 2 != 0)
-        reverse(dq.begin(), dq.end());
+    // if(cnt % 2 != 0)
+    //     reverse(dq.begin(), dq.end());
     print();
     return 0;
 }
