@@ -93,16 +93,22 @@ int main()
     sz = n;
     heapsort();
 
-    print();
+    // print();
 
+    int max = 0;
+    int j = 0;
     for (int i(0); i < n; i++)
     {
         if (search(m - heap[i]))
         {
-            cout << heap[i] << " " << m - heap[i] << endl;
-            break;
+            if (m - heap[i] > max)
+            {
+                max = m - heap[i];
+                j = i;
+            }
         }
     }
+    cout << heap[j] << " " << m - heap[j] << "\n";
 
     return 0;
 }
