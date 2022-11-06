@@ -42,6 +42,7 @@ int partition(int l, int r)
             //     // cout << "i = " << letters[i] << " j = " << letters[j] << "\n";
             //     swap(letters[i], letters[j]);
             // }
+            i++;
             swap(letters[i], letters[j]);
         }
         // if (binarysearch(letters[j], 0, 5) && binarysearch(letters[j], 0, 5))

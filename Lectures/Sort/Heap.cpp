@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-unsigned long long heap[200010];
+char heap[200010];
 int sz = 0;
 
 void heapify(int i)
@@ -11,11 +11,11 @@ void heapify(int i)
 
     int mx = i;
 
-    if (left < sz && heap[left] < heap[mx])
+    if (left < sz && heap[left] > heap[mx])
     {
         mx = left;
     }
-    if (right < sz && heap[right] < heap[mx])
+    if (right < sz && heap[right] > heap[mx])
     {
         mx = right;
     }
@@ -47,6 +47,16 @@ void heapsort()
     }
 }
 
+
+void print()
+{
+    for (int i = 0; i < sz; i++)
+    {
+        cout << heap[i] << " ";
+    }
+    cout << endl;
+}
+
 int main()
 {
     int n;
@@ -56,9 +66,11 @@ int main()
     {
         cin >> heap[i];
     }
-    heapsort();
+    // heapsort();
+    build();
     for(int i(0);i<n;i++){
         cout << heap[i] << " ";
     }
+    // print();
     cout << endl;
 }
