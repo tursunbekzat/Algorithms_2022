@@ -13,11 +13,6 @@ bool find(char c)
     return false;
 }
 
-bool find1(int h){
-    if(h % 2 == 0) return true;
-    return false;
-}
-
 void insert()
 {
     for (int i(0); i < n; i++)
@@ -31,25 +26,21 @@ void print();
 void quicksort(int l, int r)
 {
     if (r < 1 or l >= r)
-    {
         return;
-    }
     int j = r;
     while (l < j)
     {
-        if ( w[l] <= w[r] ) 
+        if (w[l] <= w[r])
         {
-            if( !find(w[l]) && find(w[r]) )
-            {
+            if (!find(w[l]) && find(w[r]))
                 swap(w[l], w[r]);
-            }
-            // cout << l << endl;
             l++;
             continue;
         }
         else
         {
-            if( find(w[l]) && !find(w[r]) ){
+            if (find(w[l]) && !find(w[r]))
+            {
                 l++;
                 continue;
             }
@@ -68,8 +59,6 @@ void quicksort(int l, int r)
             break;
         l++;
     }
-    // cout << l << "\n";
-    // print();
     quicksort(0, l - 1);
     quicksort(l, r);
 }
