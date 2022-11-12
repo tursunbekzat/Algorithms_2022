@@ -50,23 +50,12 @@ int partition(int low, int high)
 
     for (int j = low; j <= high - 1; j++)
     {
-        if (vpp[j].second.second == pivot)
-        {
-            if (vpp[j].second.first == vpp[high].second.first)
-            {
-                if (vpp[j].first > vpp[high].first)
-                {
-                    i++;
-                    swap(vpp[i], vpp[j]);
-                }
-            }
-            else if (vpp[i].second.first > vpp[high].second.first)
-            {
-                i++;
-                swap(vpp[i], vpp[j]);
+        if(vpp[j].second.first == vpp[high].second.first){
+            if(vpp[j].first < vpp[high].first){
+                swap(vpp[j], vpp[high]);
             }
         }
-        else if (vpp[j].second.second < pivot)
+        if (vpp[j].second.second < pivot)
         {
             i++;
             swap(vpp[i], vpp[j]);
@@ -81,6 +70,7 @@ void quicksort(int low, int high)
     if (low < high)
     {
         int pi = partition(low, high);
+
         quicksort(low, pi - 1);
         quicksort(pi + 1, high);
     }
@@ -105,11 +95,12 @@ int main()
         i++;
     }
 
-    // cout << "\n";
-    // print();
+    cout << "Initial data\n";
+    print();
 
     quicksort(0, n - 1);
 
+    cout << "Sorted data\n";
     print();
 
     return 0;

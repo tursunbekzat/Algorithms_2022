@@ -113,12 +113,12 @@ int main()
         i++;
     }
 
-    // cout << "Initial data\n";
-    // print();
+    cout << "Initial data\n";
+    print();
 
     quicksorty(0, n - 1);
 
-    // cout << "Sorted data\n";
+    cout << "Sorted data\n";
     print();
 
     return 0;

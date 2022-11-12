@@ -12,64 +12,53 @@ void print()
     }
     cout << "\n";
 }
+
 void quicksorty(int l, int r)
 {
-    if (l >= r or r < 1)
+    if(l >= r)
         return;
-    int i = l;
-    int j = r;
-    int g = v[r];
-    while (i < j)
-    {
-        if (v[i] > g)
-        {
-            while (j > i)
-            {
-                if (v[j] <= g)
-                {
-                    swap(v[i], v[j]);
-                    j--;
+    int h = r;
+    while (l < h){
+        if(v[l] > v[r]){
+            while(h > l){
+                if(v[h] <= v[r]){
+                    swap(v[l], v[h]);
+                    h--;
                     break;
                 }
-                j--;
+                h--;
             }
         }
-        if (j <= l)
-            break;
-        i++;
+        l++;
     }
-    quicksorty(0, i - 1);
-    quicksorty(i, r);
+    cout << "\nSorting process:\n";
+    print();
+    quicksorty(0, l - 1);
+    quicksorty(l, r);
 }
 
 void quicksortr(int l, int r)
 {
-    if (l >= r)
+    if(l >= r)
         return;
-    int i = l;
-    int j = r - 1;
-    int g = v[r];
-    while (i < j)
-    {
-        if (v[i] < g)
-        {
-            while (j > i)
-            {
-                if (v[j] > g)
-                {
-                    swap(v[i], v[j]);
-                    j--;
+    int h = r;
+    while (l < h){
+        if(v[l] < v[r]){
+            while(h > l){
+                if(v[h] >= v[r]){
+                    swap(v[l], v[h]);
+                    h--;
                     break;
                 }
-                j--;
+                h--;
             }
         }
-        i++;
+        l++;
     }
-    swap(v[i], v[r]);
+    cout << "\nSorting process:\n";
     print();
-    quicksortr(0, i - 1);
-    quicksortr(i, r);
+    quicksortr(0, l - 1);
+    quicksortr(l, r);
 }
 
 int main()
@@ -87,13 +76,16 @@ int main()
         v.push_back(x);
     }
 
-    quicksorty(0, n - 1);
-
+    cout << "\nInitial vector\n";
     print();
 
-    // quicksortr(0, n - 1);
+    quicksorty(0, n - 1);
 
+    // cout << "\nSorted vector\n";
     // print();
+
+    quicksortr(0, n - 1);
+    print();
 
     return 0;
 }
