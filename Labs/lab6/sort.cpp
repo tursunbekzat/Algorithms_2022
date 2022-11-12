@@ -15,15 +15,18 @@ void print()
 
 void quicksorty(int l, int r)
 {
-    if(l >= r)
+    if (l >= r)
         return;
     int h = r;
-    while (l < h){
-        if(v[l] > v[r]){
-            while(h > l){
-                if(v[h] <= v[r]){
+    while (l < h)
+    {
+        if (v[l] > v[r])
+        {
+            while (h > l)
+            {
+                if (v[h] <= v[r])
+                {
                     swap(v[l], v[h]);
-                    h--;
                     break;
                 }
                 h--;
@@ -39,15 +42,21 @@ void quicksorty(int l, int r)
 
 void quicksortr(int l, int r)
 {
-    if(l >= r)
+    if (l >= r)
+    {
+        cout << "has been sorted\n";
         return;
+    }
     int h = r;
-    while (l < h){
-        if(v[l] < v[r]){
-            while(h > l){
-                if(v[h] >= v[r]){
+    while (l < h)
+    {
+        if (v[l] < v[r])
+        {
+            while (h > l)
+            {
+                if (v[h] >= v[r])
+                {
                     swap(v[l], v[h]);
-                    h--;
                     break;
                 }
                 h--;
@@ -79,12 +88,10 @@ int main()
     cout << "\nInitial vector\n";
     print();
 
-    quicksorty(0, n - 1);
-
-    // cout << "\nSorted vector\n";
-    // print();
-
+    // quicksorty(0, n - 1);
     quicksortr(0, n - 1);
+
+    cout << "\nSorted vector\n";
     print();
 
     return 0;

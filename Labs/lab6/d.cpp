@@ -1,5 +1,4 @@
-#include <iostream>
-#include <vector>
+#include<bits/stdc++.h>
 using namespace std;
 
 vector<pair<string, pair<string, string>>> vpp;
@@ -49,49 +48,45 @@ void quicksorty(int l, int r)
     {
         return;
     }
-    int i = l;
-    int j = r;
-    string g = vpp[r].second.second;
-    // for (; i < j; i++)
-    while (i < j)
+    int h = r;
+    bool ok = true;
+    while (l < h)
     {
-        if (vpp[i].second.second == g)
+        if (vpp[l].second.second == vpp[r].second.second)
         {
-            if (vpp[i].second.first == vpp[r].second.first)
+            if (vpp[l].second.first == vpp[r].second.first)
             {
-                if (vpp[i].first > vpp[r].first)
+                if (vpp[l].first > vpp[r].first)
                 {
-                    swap(vpp[i], vpp[r]);
-                    continue;
+                    swap(vpp[l], vpp[r]);
+                    // continue;
                 }
             }
-            else if (vpp[i].second.first > vpp[r].second.first)
+            else if (vpp[l].second.first > vpp[r].second.first)
             {
-                swap(vpp[i], vpp[r]);
-                continue;
+                swap(vpp[l], vpp[r]);
+                // continue;
             }
         }
-        if (vpp[i].second.second > g)
+        else if (vpp[l].second.second > vpp[r].second.second)
         {
-            // for (; j >= i; j--)
-            while (j >= i)
+            while (h > l)
             {
-                if (vpp[j].second.second <= g)
+                if (vpp[h].second.second <= vpp[r].second.second)
                 {
-                    swap(vpp[i], vpp[j]);
-                    j--;
+                    swap(vpp[l], vpp[h]);
+                    // h--;
                     break;
                 }
-                j--;
+                h--;
             }
         }
-        i++;
+        l++;
         // cout << "Sorting Process\n";
         // print();
     }
-    quicksorty(0, i - 1);
-    // cout << i << "\n
-    quicksorty(i, r);
+    quicksorty(0, l - 1);
+    quicksorty(l, r);
 }
 
 int main()
@@ -113,12 +108,12 @@ int main()
         i++;
     }
 
-    cout << "Initial data\n";
-    print();
+    // cout << "Initial data\n";
+    // print();
 
     quicksorty(0, n - 1);
 
-    cout << "Sorted data\n";
+    // cout << "Sorted data\n";
     print();
 
     return 0;
