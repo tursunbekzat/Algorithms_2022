@@ -13,15 +13,17 @@ void quicksort(int l, int r)
     int h = r;
     while (l < h)
     {
-        if (letters[l] > letters[r])
+        if (int(letters[l]) > int(letters[r]))
         {
             while (l < h)
             {
-                if (letters[h] <= letters[r])
+                if (int(letters[h]) <= int(letters[r]))
+                {
                     swap(letters[l], letters[h]);
-                break;
+                    break;
+                }
+                h--;
             }
-            h--;
         }
         l++;
     }
@@ -29,19 +31,19 @@ void quicksort(int l, int r)
     quicksort(l, r);
 }
 
-void print()
+void print(int n)
 {
-    for (auto s : letters)
+    for (int i(0);i<n;i++)
     {
-        cout << s;
+        cout << letters[i];
     }
     cout << "\n";
 }
 
 int main()
 {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
+    // ios::sync_with_stdio(0);
+    // cin.tie(0);
 
     string s;
     cin >> s;
@@ -53,7 +55,7 @@ int main()
     // print();
 
     quicksort(0, s.size() - 1);
-    print();
+    print(s.size());
 
     return 0;
 }
