@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "cmath": "cpp",
+        "iostream": "cpp",
+        "iosfwd": "cpp"
+    },
+    "git.ignoreLimitWarning": true
+}
