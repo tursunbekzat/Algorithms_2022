@@ -1,7 +1,6 @@
 // C++ program for implementation of KMP pattern searching
 // algorithm
 #include <bits/stdc++.h>
-using namespace std;
 
 void computeLPSArray(char* pat, int M, int* lps);
 
@@ -82,8 +81,8 @@ void computeLPSArray(char* pat, int M, int* lps)
 // Driver program to test above function
 int main()
 {
-	char txt[] = "ABABDABACDABABCABAB";
-	char pat[] = "ABABCABAB";
+	char txt[] = "AAA";
+	char pat[] = "A";
 	KMPSearch(pat, txt);
 	return 0;
 }

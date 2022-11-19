@@ -1,16 +1,16 @@
 // C++ program for implementation of KMP pattern searching
 // algorithm
 #include <iostream>
-#include <string>
-
+#include <vector>
 using namespace std;
+
+vector<int> v;
 
 void computeLPSArray(string pat, int M, int *lps);
 
 // Prints occurrences of txt[] in pat[]
-bool KMPSearch(string pat, string txt)
+void KMPSearch(string pat, string txt)
 {
-    int cnt = 0;
     int M = pat.size();
     int N = txt.size();
 
@@ -33,8 +33,8 @@ bool KMPSearch(string pat, string txt)
 
         if (j == M)
         {
-            // j = lps[j - 1];
-            return true;
+            v.push_back(i - j);
+            j = lps[j - 1];
         }
 
         // mismatch after j matches
@@ -48,7 +48,6 @@ bool KMPSearch(string pat, string txt)
                 i = i + 1;
         }
     }
-    return false;
 }
 
 // Fills lps[] for given pattern pat[0..M-1]
@@ -93,30 +92,12 @@ void computeLPSArray(string pat, int M, int *lps)
 // Driver program to test above function
 int main()
 {
-    string s, t;
-    int cnt = 1;
-    cin >> s >> t;
-
-    string a = s;
-    while (s.size() < t.size())
-    {
-        s += a;
-        cnt++;
-    }
-
-    for (int i(0); i < 4; i++)
-    {
-        if (KMPSearch(t, s))
-        {
-            cout << cnt << "\n";
-            return 0;
-        }
-        else
-        {
-            s += a;
-            cnt++;
-        }
-    }
-    cout << -1 << "\n";
+    string s1, s2;
+    cin >> s1 >> s2;
+    KMPSearch(s2, s1);
+    cout << v.size() << "\n";
+    for (int i : v)
+        cout << i + 1 << " ";
+    cout << "\n";
     return 0;
 }

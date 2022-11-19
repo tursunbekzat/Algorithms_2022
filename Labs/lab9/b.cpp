@@ -8,7 +8,7 @@ using namespace std;
 void computeLPSArray(string pat, int M, int *lps);
 
 // Prints occurrences of txt[] in pat[]
-bool KMPSearch(string pat, string txt)
+int KMPSearch(string pat, string txt)
 {
     int cnt = 0;
     int M = pat.size();
@@ -33,8 +33,9 @@ bool KMPSearch(string pat, string txt)
 
         if (j == M)
         {
-            // j = lps[j - 1];
-            return true;
+            // printf("Found pattern at index %d ", i - j);
+            cnt++;
+            j = lps[j - 1];
         }
 
         // mismatch after j matches
@@ -48,7 +49,7 @@ bool KMPSearch(string pat, string txt)
                 i = i + 1;
         }
     }
-    return false;
+    return cnt;
 }
 
 // Fills lps[] for given pattern pat[0..M-1]
@@ -94,29 +95,11 @@ void computeLPSArray(string pat, int M, int *lps)
 int main()
 {
     string s, t;
-    int cnt = 1;
-    cin >> s >> t;
-
-    string a = s;
-    while (s.size() < t.size())
-    {
-        s += a;
-        cnt++;
-    }
-
-    for (int i(0); i < 4; i++)
-    {
-        if (KMPSearch(t, s))
-        {
-            cout << cnt << "\n";
-            return 0;
-        }
-        else
-        {
-            s += a;
-            cnt++;
-        }
-    }
-    cout << -1 << "\n";
+    int cnt;
+    cin >> t >> cnt >> s;
+    if (KMPSearch(t, s) >= cnt)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
     return 0;
 }
