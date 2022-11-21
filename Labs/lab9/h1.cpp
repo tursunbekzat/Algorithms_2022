@@ -10,20 +10,20 @@ void find(vector<int> p)
 {
     int min = INT32_MAX;
     int m;
-    if(p.size() % 2 == 0)
+    if (p.size() % 2 == 0)
         m = 0;
-    else    
+    else
         m = 1;
     for (int i(1); i < p.size(); i++)
     {
-        if (p[i] % 2 == m)
+        // if (p[i] % 2 == m)
+        // {
+        if (!mp[p[i]])
         {
-            if (!mp[p[i]])
-            {
-                min = p[i];
-                mp[p[i]] = i;
-            }
+            min = p[i];
+            mp[p[i]] = i;
         }
+        // }
     }
 }
 
@@ -75,13 +75,20 @@ int main()
         // cout << it.first << "--" << it.second << '\n';
         string s1, s2;
         int AB_size = it.second + 1;
-        if (AB_size == pat.size() || AB_size % 2 == 1) 
+        if ((AB_size == pat.size()) || (AB_size % 2 == 1))
             continue;
-        s1 = pat.substr(0, AB_size / 2); 
-        s2 = pat.substr(AB_size / 2, AB_size / 2); 
-        // cout << s1 << "--" << s2 << '\n';
-        if (s1 == s2) cnt++;
-        // cout << "cnt = " << cnt << "\n";
+        // cout << "size = " << AB_size << "\n";
+        bool ok = true;
+        for (int i(0); i < AB_size / 2; i++)
+        {
+            if (pat[i] != pat[i + AB_size / 2])
+            {
+                ok = false;
+                break;
+            }
+        }
+        if (ok)
+            cnt++;
     }
 
     cout << cnt << '\n';
