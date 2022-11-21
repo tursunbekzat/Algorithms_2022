@@ -4,13 +4,27 @@
 
 using namespace std;
 
-vector <pair <int, int> > v;
+map<int, int> mp;
 
 void find(vector<int> p)
 {
-    for (int i(0); i < p.size(); i++)
-        if (p[i] % 2 == 0)
-            v.push_back(make_pair(p[i], i));
+    int min = INT32_MAX;
+    int m;
+    if (p.size() % 2 == 0)
+        m = 0;
+    else
+        m = 1;
+    for (int i(1); i < p.size(); i++)
+    {
+        // if (p[i] % 2 == m)
+        // {
+        if (!mp[p[i]])
+        {
+            min = p[i];
+            mp[p[i]] = i;
+        }
+        // }
+    }
 }
 
 void computeLPSArray(string pat, vector<int> &lps)
@@ -52,22 +66,29 @@ int main()
 
     int cnt = 0;
 
-    map <string, bool> mp;
-    for (auto it : v)
+    // cout << '\n';
+    // for (int x : p) cout << x << " ";
+    // cout << '\n';
+
+    for (auto it : mp)
     {
+        // cout << it.first << "--" << it.second << '\n';
         string s1, s2;
         int AB_size = it.second + 1;
-        if (AB_size == pat.size()) 
+        if ((AB_size == pat.size()) || (AB_size % 2 == 1))
             continue;
-        s1 = pat.substr(0, AB_size / 2); 
-        s2 = pat.substr(AB_size / 2, AB_size / 2); 
-        if (s1 == s2 && !mp[s1] && s1 != "")
+        // cout << "size = " << AB_size << "\n";
+        bool ok = true;
+        for (int i(0); i < AB_size / 2; i++)
         {
-            // cout << it.first << "--" << it.second << '\n';
-            // cout << s1 << "--" << s2 << '\n';
-            cnt++;
-            mp[s1] = true;
+            if (pat[i] != pat[i + AB_size / 2])
+            {
+                ok = false;
+                break;
+            }
         }
+        if (ok)
+            cnt++;
     }
 
     cout << cnt << '\n';
