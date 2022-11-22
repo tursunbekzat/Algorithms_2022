@@ -2,7 +2,8 @@
     "files.associations": {
         "cmath": "cpp",
         "iostream": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "chrono": "cpp"
     },
     "git.ignoreLimitWarning": true
 }
